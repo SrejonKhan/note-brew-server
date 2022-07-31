@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from flask import jsonify, request, Blueprint
+from flask import jsonify, request, Blueprint, current_app
 import jwt
 from werkzeug.security import check_password_hash
 from app.models import User
@@ -36,7 +36,7 @@ def sign_in():
     token = jwt.encode({
         'user_id': user.user_id,
         'exp' : datetime.utcnow() + timedelta(minutes=15),
-    },sign_in_bp.config['SECRET_KEY'], "HS256")
+    },current_app.config['SECRET_KEY'], "HS256")
     
     return jsonify({
         'status': 200, 
