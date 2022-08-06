@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-from app.extensions import db, app
+from app.extensions import app, db, migrate
 from app.auth import auth_blueprint
 from app.api import api_blueprint
 
@@ -16,6 +16,7 @@ app.config['SECRET_KEY']= os.environ['SECRET_KEY']
 CORS(app)
 
 db.init_app(app)
+migrate.init_app(app, db)
 
 app.register_blueprint(auth_blueprint)
 app.register_blueprint(api_blueprint)
