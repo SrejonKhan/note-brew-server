@@ -1,17 +1,17 @@
 import json
 from flask import Blueprint, jsonify, request
-from app.middleware import token_required
+from flask_jwt_extended import jwt_required, current_user
 from app.models import Note
 from app.extensions import db 
 
 note_api_bp = Blueprint("note_api", __name__)
 
 @note_api_bp.route('/notes', methods=["GET"])
-@token_required
-def get_notes(current_user):
+@jwt_required()
+def get_notes():
     query_result = Note.query.all()
     result_dict = [n.serialize() for n in query_result]
-    return jsonify(result_dict)
+    return jsonify(current_user)
 
 
 @note_api_bp.route('/note', methods=["POST"])

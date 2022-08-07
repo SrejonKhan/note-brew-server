@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 from flask import jsonify, request, Blueprint, current_app
-import jwt
+from flask_jwt_extended import create_access_token
 from werkzeug.security import check_password_hash
 from app.models import User
 
@@ -33,13 +33,13 @@ def sign_in():
             'msg':'Could not verify!',
             }), 401
     
-    token = jwt.encode({
-        'user_id': user.user_id,
+    addiotional_claims = {
         'exp' : datetime.utcnow() + timedelta(minutes=15),
-    },current_app.config['SECRET_KEY'], "HS256")
+    }
+    access_token = create_access_token(identity=user.user_id, additional_claims=addiotional_claims)
     
     return jsonify({
         'status': 200, 
-        'data': {'token': token}, 
+        'data': {'token': access_token}, 
         'msg':'Signed in successfully!',
         }), 200

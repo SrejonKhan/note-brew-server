@@ -1,11 +1,13 @@
 from flask import Blueprint
-from app.middleware import token_required
+from flask_jwt_extended import jwt_required, current_user
 
 user_api_bp = Blueprint("user_api", __name__)
 
+
 @user_api_bp.route('/me')
-@token_required
-def me(current_user):
-    return current_user.jsonify_self()
+@jwt_required()
+def me():
+    user = current_user
+    return user.user_id
 
 

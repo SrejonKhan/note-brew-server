@@ -1,19 +1,22 @@
 import os
 from dotenv import load_dotenv
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-from app.extensions import app, db, migrate
+from app.extensions import app, db, migrate, jwt
 from app.auth import auth_blueprint
 from app.api import api_blueprint
+from app.middleware import user_lookup_callback
 
 load_dotenv() 
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['SQLALCHEMY_DATABASE_URI']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY']= os.environ['SECRET_KEY']
+app.config['JWT_SECRET_KEY']= os.environ['SECRET_KEY']
 
 CORS(app)
+
+jwt.__init__(app)
+jwt.user_lookup_loader(user_lookup_callback)
 
 db.init_app(app)
 migrate.init_app(app, db)

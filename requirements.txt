@@ -1,7 +1,7 @@
 Flask
 Flask-Cors
 Flask-SQLAlchemy
-PyJWT
+flask-jwt-extended
 shortuuid
 python-dotenv
 Flask-Migrate

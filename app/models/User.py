@@ -37,7 +37,7 @@ class User(db.Model, Serializer):
     
     @staticmethod
     def find_user_by_uid(user_id):
-        return User.query.filter(User.user_id == user_id).first()
+        return User.query.filter(User.user_id == user_id).one_or_none()
 
 
         
