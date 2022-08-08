@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
-from flask import jsonify, request, Blueprint, current_app
-from flask_jwt_extended import create_access_token
+from flask import jsonify, request, Blueprint
+from flask_jwt_extended import create_access_token, create_refresh_token
 from werkzeug.security import check_password_hash
 from app.models import User
 
@@ -37,9 +37,13 @@ def sign_in():
         'exp' : datetime.utcnow() + timedelta(minutes=15),
     }
     access_token = create_access_token(identity=user.user_id, additional_claims=addiotional_claims)
-    
+    refresh_token = create_refresh_token(identity=user.user_id)
+
     return jsonify({
         'status': 200, 
-        'data': {'token': access_token}, 
+        'data': {
+            'access_token': access_token, 
+            'refresh_token' : refresh_token
+            }, 
         'msg':'Signed in successfully!',
         }), 200
