@@ -4,10 +4,12 @@ from flask_jwt_extended import create_access_token, create_refresh_token, get_jt
 from werkzeug.security import check_password_hash
 from app.models import Token, User
 from app.extensions import db
+from flasgger import swag_from
 
 sign_in_bp = Blueprint('sign_in', __name__)
 
 @sign_in_bp.route('/sign-in', methods=["POST"])
+@swag_from("../../docs/auth/sign-in.yml")
 def sign_in():
     data = request.get_json()
     
@@ -57,7 +59,7 @@ def sign_in():
             created_at=utcnow, 
             last_updated_at=utcnow
             ))
-            
+
     db.session.commit()
 
     return jsonify({

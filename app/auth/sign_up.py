@@ -1,12 +1,13 @@
 from flask import jsonify, request, Blueprint
 from werkzeug.security import generate_password_hash
-
 from app.extensions import db
 from app.models import User
+from flasgger import swag_from
 
 sign_up_bp = Blueprint('sign_up', __name__)
 
 @sign_up_bp.route('/sign-up', methods=["POST"])
+@swag_from("../../docs/auth/sign-up.yml")
 def sign_up():
     data = request.get_json()
 

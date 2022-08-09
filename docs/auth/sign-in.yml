@@ -1,0 +1,23 @@
+Sign in an user with email-password. 
+---
+tags:
+  - Auth
+parameters:
+  - in: body
+    name: body
+    description: json body for email-password
+    schema:
+      properties:
+        email:
+          type: string
+          description: User email
+          example: user@example.com
+        password:
+          type: string
+          description: User password
+          example: superstrongpassword
+responses:
+  200:
+    description: User signed in successfully. 
+  404:
+    description: Requested User not found. 

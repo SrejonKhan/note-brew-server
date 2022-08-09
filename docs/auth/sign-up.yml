@@ -1,0 +1,33 @@
+Sign up a new user with email-password. 
+---
+tags:
+  - Auth
+parameters:
+  - in: body
+    name: body
+    description: User details (Email, Password, Display Name)
+    schema:
+      properties:
+        email:
+          type: string
+          description: User email
+          example: user@example.com
+        password:
+          type: string
+          description: User password
+          example: superstrongpassword
+        name:
+          type: string
+          description: User Display Name
+          example: User Hello
+responses:
+  200:
+    description: User signed up successfully. 
+    examples:
+      data:
+        email: user@example.com
+        name: User Hello
+  400:
+    description: Wrong JSON Body provided or User already exists!. 
+  404:
+    description: Requested User not found. 

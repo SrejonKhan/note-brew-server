@@ -5,3 +5,4 @@ flask-jwt-extended
 shortuuid
 python-dotenv
 Flask-Migrate
+flasgger
