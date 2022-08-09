@@ -1,11 +1,10 @@
 import os
 from dotenv import load_dotenv
-from flask import Flask
 from flask_cors import CORS
 from app.extensions import app, db, migrate, jwt
 from app.auth import auth_blueprint
 from app.api import api_blueprint
-from app.middleware import user_lookup_callback
+from app.middleware import user_lookup_callback, is_token_revoked
 
 load_dotenv() 
 
@@ -17,6 +16,7 @@ CORS(app)
 
 jwt.__init__(app)
 jwt.user_lookup_loader(user_lookup_callback)
+jwt.token_in_blocklist_loader(is_token_revoked)
 
 db.init_app(app)
 migrate.init_app(app, db)

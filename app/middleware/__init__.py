@@ -1,1 +1,1 @@
-from .auth_middleware import user_lookup_callback
+from .auth_middleware import user_lookup_callback, is_token_revoked

@@ -1,8 +1,9 @@
 from datetime import datetime, timedelta
 from flask import jsonify, request, Blueprint
-from flask_jwt_extended import create_access_token, create_refresh_token
+from flask_jwt_extended import create_access_token, create_refresh_token, get_jti
 from werkzeug.security import check_password_hash
-from app.models import User
+from app.models import Token, User
+from app.extensions import db
 
 sign_in_bp = Blueprint('sign_in', __name__)
 
@@ -33,11 +34,31 @@ def sign_in():
             'msg':'Could not verify!',
             }), 401
     
+    utcnow = datetime.utcnow()
     addiotional_claims = {
-        'exp' : datetime.utcnow() + timedelta(minutes=15),
+        'exp' : utcnow + timedelta(minutes=15),
     }
     access_token = create_access_token(identity=user.user_id, additional_claims=addiotional_claims)
     refresh_token = create_refresh_token(identity=user.user_id)
+    
+    db.session.add(
+        Token(
+            jti=get_jti(access_token), 
+            type="access", 
+            user_id=user.user_id, 
+            created_at=utcnow, 
+            last_updated_at=utcnow,
+            ))
+    db.session.add(
+        Token(
+            jti=get_jti(refresh_token), 
+            type="refresh", 
+            user_id=user.user_id, 
+            created_at=utcnow, 
+            last_updated_at=utcnow
+            ))
+            
+    db.session.commit()
 
     return jsonify({
         'status': 200, 
