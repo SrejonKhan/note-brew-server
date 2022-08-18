@@ -1,0 +1,9 @@
+Get information about authenticated user. 
+---
+tags:
+  - User
+security:
+  - Bearer: []
+responses:
+  200:
+    description: Information retrieved successfully. 
