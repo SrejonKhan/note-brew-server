@@ -4,11 +4,13 @@ from flask_jwt_extended import create_access_token, get_jwt, get_jti, get_curren
 from flask import jsonify, Blueprint
 from app.extensions import db
 from app.models import Token
+from flasgger import swag_from
 
 refresh_bp = Blueprint('refresh', __name__)
 
 @refresh_bp.route("/refresh", methods=["POST"])
 @jwt_required(refresh=True)
+@swag_from("../../docs/auth/refresh.yml")
 def refresh():
     user = get_current_user()
     token = get_jwt()

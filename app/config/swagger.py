@@ -25,15 +25,15 @@ swagger_template = {
         "https",
         "http",
     ], 
+    "produces": [
+        "application/json",
+    ],
     "securityDefinitions": {
-        "JWT": {
+        "Bearer": {
             "type": "apiKey",
-            "name": "access_token",
+            "name": "Authorization",
             "in": "header",
             "description": "JWT Authorization header using the Bearer scheme."
         }
-    },
-    "security": {
-        "JWT" : []
     }
 }

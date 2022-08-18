@@ -3,11 +3,13 @@ from flask import jsonify, Blueprint, request
 from flask_jwt_extended import get_jwt, jwt_required, get_current_user
 from app.extensions import db
 from app.models import Token
+from flasgger import swag_from
 
 sign_out_bp = Blueprint('sign_out', __name__)
 
 @sign_out_bp.route('/sign-out', methods=["DELETE"])
 @jwt_required()
+@swag_from("../../docs/auth/sign-out.yml")
 def sign_out():
     token = get_jwt()
     access_token = token["jti"]
@@ -32,6 +34,7 @@ def sign_out():
 
 @sign_out_bp.route('/sign-out-all', methods=["DELETE"])
 @jwt_required()
+@swag_from("../../docs/auth/sign-out-all.yml")
 def sign_out_all():
     user = get_current_user()
     tokens = db.session.query(Token).filter_by(user_id=user.user_id)

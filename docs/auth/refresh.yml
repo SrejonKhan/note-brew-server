@@ -1,0 +1,12 @@
+Grant a new access token using refresh token.  
+---
+description: Refresh token should be provided in Authorization Header with Bearer. Example - Bearer <refresh_token>
+tags:
+  - Auth
+security:
+  - Bearer: []
+responses:
+  200:
+    description: Token refreshed successfully, new token granted. 
+  401:
+    description: Revoked/Invalid Token. 

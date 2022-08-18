@@ -4,17 +4,23 @@ tags:
   - Auth
 parameters:
   - in: body
-    name: body
-    description: json body for email-password
+    name: payload
+    description: payload for email-password
+    required: true
     schema:
+      type: object
+      required:
+        - "email"
+        - "password"
       properties:
         email:
-          type: string
+          type: "email"
           description: User email
           example: user@example.com
         password:
-          type: string
+          type: "string"
           description: User password
+          required: true
           example: superstrongpassword
 responses:
   200:

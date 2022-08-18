@@ -16,8 +16,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY']= os.environ['SECRET_KEY']
 app.config['SWAGGER'] = {'title': 'Note Brew API Docs', 'uiversion': 3}
 # app.config['SWAGGER']['openapi'] = '3.0.2'
-app.config['JWT_AUTH_URL_RULE'] = '/api/auth'
-app.config['JWT_AUTH_HEADER_NAME'] = 'JWTAuthorization'
 
 # CORS
 CORS(app)

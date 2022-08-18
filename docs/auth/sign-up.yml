@@ -12,14 +12,17 @@ parameters:
           type: string
           description: User email
           example: user@example.com
+          required: true
         password:
           type: string
           description: User password
           example: superstrongpassword
+          required: true
         name:
           type: string
           description: User Display Name
           example: User Hello
+          required: true
 responses:
   200:
     description: User signed up successfully. 

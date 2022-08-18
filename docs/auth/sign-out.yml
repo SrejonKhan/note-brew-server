@@ -1,0 +1,9 @@
+Sign out an user. 
+---
+tags:
+  - Auth
+security:
+  - Bearer: []
+responses:
+  200:
+    description: User signed out successfully. 

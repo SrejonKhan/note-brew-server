@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from urllib import response
 from flask import jsonify, request, Blueprint
 from flask_jwt_extended import create_access_token, create_refresh_token, get_jti
 from werkzeug.security import check_password_hash
@@ -62,11 +63,14 @@ def sign_in():
 
     db.session.commit()
 
-    return jsonify({
+    response = jsonify({
         'status': 200, 
         'data': {
             'access_token': access_token, 
             'refresh_token' : refresh_token
             }, 
         'msg':'Signed in successfully!',
-        }), 200
+        })
+    response.headers.extend({'jwt-token': access_token})
+
+    return response, 200
