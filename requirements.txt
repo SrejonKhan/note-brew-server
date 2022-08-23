@@ -6,3 +6,4 @@ shortuuid
 python-dotenv
 Flask-Migrate
 flasgger
+psycopg2

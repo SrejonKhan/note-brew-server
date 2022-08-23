@@ -5,11 +5,11 @@ import shortuuid
 
 class User(db.Model, Serializer):
     __tablename__ = "users"
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.String(32))
+    user_id = db.Column(db.String(32), primary_key=True)
     name = db.Column(db.String(50))
     email = db.Column(db.String(50))
-    password = db.Column(db.String(50))
+    password = db.Column(db.String(100))
+    notes = db.relationship('Note', backref='owner')
 
     def __init__(self, name, email, password):
         self.user_id = shortuuid.uuid()
