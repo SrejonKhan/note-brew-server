@@ -8,3 +8,4 @@ Flask-Migrate
 flasgger
 psycopg2
 pytest
+gunicorn
