@@ -1,19 +1,24 @@
 name: Continuous Integration
 
-on: 
-  push:
-    branches:
-      - '*'
+on: push
+
+env: 
+  SECRET_KEY: ${{ secrets.SECRET_KEY }}
+  TEST_DATABASE_URI: ${{ secrets.TEST_DATABASE_URI }}
+  DEV_DATABASE_URI: ${{ secrets.DEV_DATABASE_URI }}
+  PROD_DATABASE_URI: ${{ secrets.PROD_DATABASE_URI }}
 
 jobs:
   run_tests:
-    runs-on: [ubuntu-latest]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
           python-version: '3.10'
+
       - name: Install requirements
         run: pip install -r requirements.txt 
+        
       - name: Test
-        run: python -m pytest tests -v
+        run: python -m pytest tests -v -p no:warnings
