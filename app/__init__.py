@@ -1,43 +1,41 @@
-import os
-from dotenv import load_dotenv
-from flask import render_template, request, abort
+from flask import Flask
 from flask_cors import CORS
-from app.config.swagger import swagger_config, swagger_template 
-from app.extensions import app, db, migrate, jwt, swagger
+from app.configs.swagger import swagger_config, swagger_template 
+from app.extensions import db, migrate, jwt, swagger
 from app.auth import auth_blueprint
 from app.api import api_blueprint
 from app.middleware import user_lookup_callback, is_token_revoked
 
-load_dotenv() 
+def create_app(config='configs.config.DevelopmentConfig'):
+    app = Flask(__name__)  
+    app.config.from_object(config)
 
-# Config
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['SQLALCHEMY_DATABASE_URI']
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['JWT_SECRET_KEY']= os.environ['SECRET_KEY']
-app.config['SWAGGER'] = {'title': 'Note Brew API Docs', 'uiversion': 3}
-# app.config['SWAGGER']['openapi'] = '3.0.2'
+    CORS(app)
 
-# CORS
-CORS(app)
+    init_db(app)
+    init_swagger(app)
+    register_blueprints(app)
+
+    return app
 
 # JWT
-jwt.__init__(app)
-jwt.user_lookup_loader(user_lookup_callback)
-jwt.token_in_blocklist_loader(is_token_revoked)
+def init_jwt(app):
+    jwt.__init__(app)
+    jwt.user_lookup_loader(user_lookup_callback)
+    jwt.token_in_blocklist_loader(is_token_revoked)
 
 # DB
-db.init_app(app)
-migrate.init_app(app, db)
+def init_db(app):
+    db.init_app(app)
+    migrate.init_app(app, db)
 
 # Swagger
-swagger.config = swagger_config
-swagger.template = swagger_template
-swagger.init_app(app)
+def init_swagger(app):
+    swagger.config = swagger_config
+    swagger.template = swagger_template
+    swagger.init_app(app)
 
-# Blueprint
-app.register_blueprint(auth_blueprint)
-app.register_blueprint(api_blueprint)
-
-@app.route('/') 
-def index():
-    return render_template("index.html")
+# Blueprints
+def register_blueprints(app):
+    app.register_blueprint(auth_blueprint)
+    app.register_blueprint(api_blueprint)
