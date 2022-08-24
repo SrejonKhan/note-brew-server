@@ -23,6 +23,7 @@ jobs:
         run: pip install -r requirements.txt 
   test:
     needs: build
+    runs-on: ubuntu-latest
     steps:
       - name: Run Tests
         run: python -m pytest tests -v -p no:warnings
