@@ -2,6 +2,7 @@ from flask import jsonify
 from app.extensions import db
 from app.helper import Serializer
 import shortuuid
+from werkzeug.security import generate_password_hash
 
 class User(db.Model, Serializer):
     __tablename__ = "users"
@@ -15,7 +16,7 @@ class User(db.Model, Serializer):
         self.user_id = shortuuid.uuid()
         self.name = name
         self.email = email
-        self.password = password
+        self.password = generate_password_hash(password, method='sha256')
     
     def add_self(self):
         db.session.add(self)

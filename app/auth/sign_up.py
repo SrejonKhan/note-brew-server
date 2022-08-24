@@ -1,5 +1,4 @@
 from flask import jsonify, request, Blueprint
-from werkzeug.security import generate_password_hash
 from app.extensions import db
 from app.models import User
 from flasgger import swag_from
@@ -25,10 +24,8 @@ def sign_up():
             'data': None, 
             'msg':'User already exists!',
             }), 400
-
-    hashed_password = generate_password_hash(data['password'], method='sha256')
     
-    new_user = User(name = data['name'], email=data['email'], password=hashed_password)
+    new_user = User(name = data['name'], email=data['email'], password=data['password'])
     db.session.add(new_user)
     db.session.commit()
 
