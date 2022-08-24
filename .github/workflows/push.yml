@@ -27,5 +27,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+      - name: Install requirements
+        run: pip install -r requirements.txt 
       - name: Run Tests
         run: python -m pytest tests -v -p no:warnings
