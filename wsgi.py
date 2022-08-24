@@ -1,5 +1,8 @@
 import os
 from app import create_app
+from dotenv import load_dotenv
+
+load_dotenv()
 
 CONFIG_TYPE = os.getenv('CONFIG_TYPE', default='app.configs.config.DevelopmentConfig')
 app = create_app(CONFIG_TYPE)
