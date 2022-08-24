@@ -2,9 +2,10 @@ from flask import Flask
 from flask_cors import CORS
 from app.configs.swagger import swagger_config, swagger_template 
 from app.extensions import db, migrate, jwt, swagger
+from app.middleware import user_lookup_callback, is_token_revoked
 from app.auth import auth_blueprint
 from app.api import api_blueprint
-from app.middleware import user_lookup_callback, is_token_revoked
+from app.pages import page_blueprint
 
 def create_app(config='configs.config.DevelopmentConfig'):
     app = Flask(__name__)  
@@ -39,3 +40,4 @@ def init_swagger(app):
 def register_blueprints(app):
     app.register_blueprint(auth_blueprint)
     app.register_blueprint(api_blueprint)
+    app.register_blueprint(page_blueprint)

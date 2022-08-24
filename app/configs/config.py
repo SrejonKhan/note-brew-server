@@ -15,6 +15,7 @@ class Config:
 # Development Config
 class DevelopmentConfig(Config):
     DEBUG = True
+    TEMPLATES_AUTO_RELOAD = True
     SQLALCHEMY_DATABASE_URI = os.environ['DEV_DATABASE_URI']
 
 # Testing Config
