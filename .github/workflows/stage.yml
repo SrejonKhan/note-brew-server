@@ -9,6 +9,10 @@ env:
   HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
   HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
   HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
+  SECRET_KEY: ${{ secrets.SECRET_KEY }}
+  TEST_DATABASE_URI: ${{ secrets.TEST_DATABASE_URI }}
+  DEV_DATABASE_URI: ${{ secrets.DEV_DATABASE_URI }}
+  PROD_DATABASE_URI: ${{ secrets.PROD_DATABASE_URI }}
 
 jobs:
   build:
