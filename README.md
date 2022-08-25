@@ -2,15 +2,23 @@
 Server for Note Brew, using Python Flask. For Client side, please visit this [repo](https://github.com/Md-Alamin2/note-brew-client). 
 
 ## Initialize 
-1. Create a virtual environement for Python 3.10.x. 
+1. Create a virtual environement for Python 3.10.x and activate it.
 2. Install all packages from `requirements.txt`.
-```
-pip install -r requirements.txt
-```
-3. Run locally - 
-```
-FLASK_APP=app FLASK_ENV=development flask run
-```
+    ```console
+    pip install -r requirements.txt
+    ```
+3. Create a `.env` file in root folder - 
+    ```
+    DEV_DATABASE_URI='uri://to-your-dev-db'
+    TEST_DATABASE_URI='uri://to-your-test-db'
+    PROD_DATABASE_URI='uri://to-your-prod-db'
+    SECRET_KEY='secretkey'
+    CONFIG_TYPE = app.configs.config.DevelopmentConfig
+    ```
+4. Run locally - 
+    ```console
+    FLASK_APP=wsgi.py flask run
+    ```
 
 ## Version Control
 It is requested to keep following branching procedures in mind while working on the project: 
